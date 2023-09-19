@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
-import './index.css';
 import { Button } from 'antd';
 
 export default function Calculator(props) {
+  const { initalValue } = props;
   const [value, setValue] = useState(initalValue || 0);
 
   const handleInc = () => setValue(value + 1);
