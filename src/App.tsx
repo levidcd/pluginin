@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 
-export default function Calculator(props) {
-  const { initalValue } = props;
+export function Calculator(props) {
+  const { initalValue, plugins } = props;
   const [value, setValue] = useState(initalValue || 0);
 
-  const handleInc = () => setValue(value + 1);
-
-  const handleDec = () => setValue(value - 1);
-  // 新增能力
-  const handleSquared = () => setValue(value * value);
+  const buttons = plugins.map((v) => (
+    <Button onClick={() => v.exec(value, setValue)}>{v.name}</Button>
+  ));
 
   return (
     <div>
       <div>{value}</div>
-      <Button onClick={handleInc}>inc</Button>
-      <Button onClick={handleDec}>dec</Button>
-      <Button onClick={handleSquared}>squared</Button>
+      {buttons}
     </div>
   );
+}
+
+export default function showCalculator({ initalValue, plugins = [] }) {
+  const corePlugins = [
+    { name: 'inc', exec: (val, setVal) => setVal(val + 1) },
+    { name: 'dec', exec: (val, setVal) => setVal(val - 1) },
+  ];
+
+  const newPlugins = [...corePlugins, ...plugins];
+
+  return <Calculator initalValue={initalValue} plugins={newPlugins} />;
 }

@@ -7,6 +7,9 @@ const root = createRoot(document.getElementById('app'));
 
 root.render(
   <StrictMode>
-    <App name="StackBlitz" />
+    <App
+      initalValue={0}
+      plugins={[{ name: 'square', exec: (val, setVal) => setVal(val * val) }]}
+    />
   </StrictMode>
 );
